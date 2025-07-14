@@ -38,7 +38,7 @@ class EightQueen:
         for row, col in enumerate(queens):
             print(f"Step: queens[{row}][{col}] = queens[{row}][{col}]")
 
-# 10 different test cases
+# 10 different test cases (to be changed)
 # queens[i] = j --> queen at row i, column j.
 test_cases = [
     [0, 4, 7, 5, 2, 6, 1, 3],
@@ -61,5 +61,7 @@ for i, case in enumerate(test_cases, 1):
     print(f"\nTest Case {i}: {case}\n")
     eq.print_queen_placement_steps(case)
     eq.win_or_lose(i)
+    eq.display_board()
+    print()
 
 print('-' * 40)
