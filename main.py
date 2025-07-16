@@ -12,11 +12,11 @@ class EightQueens:
             for j in range(i + 1, n):
                 # check if in the same column
                 if self.queens[i] == self.queens[j]:
-                    return False;
+                    return False
 
                 # check if in the same diagonal
                 if abs(self.queens[i] - self.queens[j]) == abs(i - j):
-                    return False;
+                    return False
 
         return True # if passed all constraints return true
     
