@@ -1,4 +1,4 @@
-class EightQueen:
+class EightQueens:
     def __init__(self, queens=None):
         # if queens list is not defined, initialize as empty list
         self.queens = queens if queens is not None else [] 
@@ -7,7 +7,7 @@ class EightQueen:
         self.queens = queens
 
     def is_valid_queen_placement(self):
-        n = len(self.queens);
+        n = len(self.queens)
         for i in range(n):
             for j in range(i + 1, n):
                 # check if in the same column
@@ -57,7 +57,7 @@ test_cases = [
 # Step: queens[a][b] = queens[c][d] --> queen from row a, col b move to row c, col d
 for i, case in enumerate(test_cases, 1):
     print('-' * 40)
-    eq = EightQueen(case)
+    eq = EightQueens(case)
     print(f"\nTest Case {i}: {case}\n")
     eq.print_queen_placement_steps(case)
     eq.win_or_lose(i)
