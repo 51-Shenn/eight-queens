@@ -1,3 +1,4 @@
+import time
 class EightQueens:
     def __init__(self, queens=None):
         # if queens list is not defined, initialize as empty list
@@ -21,7 +22,7 @@ class EightQueens:
         return True # if passed all constraints return true
     
     def display_board(self):
-        board = [['.' for _ in range(8)] for _ in range(8)]
+        board = [['-' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
             if 0 <= col < 8:
                 board[row][col] = 'Q'
@@ -41,27 +42,38 @@ class EightQueens:
 # 10 different test cases (to be changed)
 # queens[i] = j --> queen at row i, column j.
 test_cases = [
-    [0, 4, 7, 5, 2, 6, 1, 3],
     [0, 1, 2, 3, 4, 5, 6, 7],
-    [1, 3, 5, 7, 2, 0, 6, 4],
-    [2, 4, 6, 0, 3, 1, 7, 5],
-    [0, 2, 4, 1, 7, 5, 3, 6],
-    [3, 1, 6, 2, 5, 7, 0, 4],
-    [4, 6, 0, 2, 7, 5, 3, 1],
-    [5, 3, 0, 4, 7, 1, 6, 2],
-    [0, 2, 4, 6, 1, 3, 5, 7],
-    [1, 5, 0, 6, 3, 7, 2, 4], 
+    [7, 6, 5, 4, 3, 2, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 2, 4, 6, 0, 2, 4, 6],
+    [1, 3, 1, 3, 1, 3, 1, 3],
+    [0, 2, 2, 5, 5, 7, 7, 1],
+    [4, 4, 2, 2, 0, 0, 6, 6],
+    [0, 3, 1, 4, 2, 5, 3, 6],
+    [1, 1, 1, 1, 2, 2, 2, 2],
+    [0, 1, 0, 1, 0, 1, 0, 1], 
 ]
+
+total_time_used = 0
 
 # test all cases
 # Step: queens[a][b] = queens[c][d] --> queen from row a, col b move to row c, col d
 for i, case in enumerate(test_cases, 1):
     print('-' * 40)
     eq = EightQueens(case)
+    start_time = time.perf_counter()
     print(f"\nTest Case {i}: {case}\n")
     eq.print_queen_placement_steps(case)
+    end_time = time.perf_counter()
     eq.win_or_lose(i)
     eq.display_board()
-    print()
+    time_used = end_time - start_time
+    total_time_used += time_used
+    print(f"\nTime used to solve Test Case {i}: {time_used:.4f} seconds\n")
 
 print('-' * 40)
+print()
+
+print(f"Total time used to solve all {len(test_cases)} test cases: {total_time_used:.4f} seconds")
+average_time = total_time_used / len(test_cases);
+print(f"Average time per case: {average_time:.4f} seconds\n")
