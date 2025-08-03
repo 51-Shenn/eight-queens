@@ -46,10 +46,10 @@ class EightQueens:
 
         if self.is_valid_queen_placement():
             print(f"Test Case {test_case_no} Result: WIN  ✅")
-            return 0
+            return True
         else:
             print(f"Test Case {test_case_no} Result: LOSE ❌")
-            return 1
+            return False
     
     def place_queen(self, row, col):
         """
