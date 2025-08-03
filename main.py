@@ -122,7 +122,7 @@ def run_test_cases():
 
     print('-' * 40)
     lose_count = no_of_test_cases - win_count
-    average_time = total_time_used / len(test_cases)
+    average_time = total_time_used / no_of_test_cases
     percentage = win_count / no_of_test_cases * 100
     average_memory = total_memory_used / no_of_test_cases
 
