@@ -70,7 +70,6 @@ class EightQueens:
                 print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
 def run_test_cases():
-    # 10 different test cases (to be changed)
     # queens[i] = j --> queen at row i, column j.
     test_cases = [
         [0, 1, 2, 3, 4, 5, 6, 7],
