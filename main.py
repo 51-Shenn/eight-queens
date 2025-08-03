@@ -9,9 +9,13 @@ class EightQueens:
                 self.queens[i] = queens[i]
         
     def set_queens(self, queens):
+        """Set the queen positions manually with a given list"""
+
         self.queens = queens
 
     def is_valid_queen_placement(self):
+        """Check whether the current placement of queens is valid"""
+
         n = len(self.queens)
         for i in range(n):
             for j in range(i + 1, n):
@@ -26,7 +30,8 @@ class EightQueens:
         return True # if passed all constraints return true
     
     def display_board(self):
-        """Display the current position of queens in the chessboard"""
+        """Display the chessboard with current queen positions"""
+
         print()
         self.board = [['-' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
@@ -37,7 +42,8 @@ class EightQueens:
         print()
 
     def win_or_lose(self, test_case_no):
-        """To determine whether the currect position of all queens is valid or invalid"""
+        """Evaluate and print if the current test case is a WIN (valid) or LOSE (invalid)"""
+
         if self.is_valid_queen_placement():
             print(f"Test Case {test_case_no} Result: WIN  ✅")
             return 0
@@ -93,8 +99,8 @@ for i, case in enumerate(test_cases, 1):
     start_time = time.perf_counter()
 
     # implement algorithm here
-    eq.place_queen(row=1, col=2)
-    eq.place_queen(row=3, col=7)
+    eq.place_queen(row=1, col=2) # example how it works (remove this)
+    eq.place_queen(row=3, col=7) # example how it works (remove this)
     eq.display_board()
 
     # end memory and time tracking
