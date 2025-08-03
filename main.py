@@ -62,9 +62,12 @@ class EightQueens:
             3. Queen moved to row 0, col 2
         """
         if 0 <= row < 8 and 0 <= col < 8:
+            original_col = self.queens[row]
             self.queens[row] = col
-            self.board[row][col] = 'Q'
-            print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
+            if original_col != -1 and original_col != col:
+                print(f"Step: Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
+            else:
+                print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
 def run_test_cases():
     # 10 different test cases (to be changed)
