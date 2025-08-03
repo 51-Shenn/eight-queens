@@ -1,4 +1,5 @@
 import time
+import tracemalloc
 class EightQueens:
     def __init__(self, queens=None):
         # if queens list is not defined, initialize as empty list
@@ -22,22 +23,28 @@ class EightQueens:
         return True # if passed all constraints return true
     
     def display_board(self):
-        board = [['-' for _ in range(8)] for _ in range(8)]
+        print()
+        self.board = [['-' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
             if 0 <= col < 8:
-                board[row][col] = 'Q'
-        for row in board:
+                self.board[row][col] = 'Q'
+        for row in self.board:
             print(' '.join(row))
+        print()
 
     def win_or_lose(self, test_case_no):
         if self.is_valid_queen_placement():
-            print(f"\nTest Case {test_case_no} Result: WIN  ✅\n")
+            print(f"Test Case {test_case_no} Result: WIN  ✅")
+            return 0
         else:
-            print(f"\nTest Case {test_case_no} Result: LOSE ❌\n")
-
-    def print_queen_placement_steps(self, queens):
-        for row, col in enumerate(queens):
-            print(f"Step: queens[{row}][{col}] = queens[{row}][{col}]")
+            print(f"Test Case {test_case_no} Result: LOSE ❌")
+            return 1
+    
+    def place_queen(self, row, col):
+        if 0 <= row < 8 and 0 <= col < 8:
+            self.queens[row] = col
+            self.board[row][col] = 'Q'
+            print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
 # 10 different test cases (to be changed)
 # queens[i] = j --> queen at row i, column j.
@@ -55,25 +62,52 @@ test_cases = [
 ]
 
 total_time_used = 0
+total_memory_used = 0
+win_count = 0
+no_of_test_cases = len(test_cases)
 
 # test all cases
-# Step: queens[a][b] = queens[c][d] --> queen from row a, col b move to row c, col d
 for i, case in enumerate(test_cases, 1):
     print('-' * 40)
+    print(f"\nTest Case {i}: {case}")
+
     eq = EightQueens(case)
-    start_time = time.perf_counter()
-    print(f"\nTest Case {i}: {case}\n")
-    eq.print_queen_placement_steps(case)
-    end_time = time.perf_counter()
-    eq.win_or_lose(i)
     eq.display_board()
-    time_used = end_time - start_time
+
+    # start tracking memory and time
+    tracemalloc.start()
+    start_time = time.perf_counter()
+
+    # implement algorithm here
+    eq.place_queen(row=1, col=2)
+    eq.place_queen(row=3, col=7)
+    eq.display_board()
+
+    # end memory and time tracking
+    time_used = time.perf_counter() - start_time
+    current, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
     total_time_used += time_used
-    print(f"\nTime used to solve Test Case {i}: {time_used:.4f} seconds\n")
+    total_memory_used += peak
+
+    is_win = eq.win_or_lose(i)
+    win_count += int(is_win)
+
+    print(f"Time Used: {time_used:.4f} seconds")
+    print(f"Peak Memory Usage: {peak / 1024:.2f} KB\n") # show in KB
 
 print('-' * 40)
-print()
+lose_count = no_of_test_cases - win_count
+average_time = total_time_used / len(test_cases)
+percentage = win_count / no_of_test_cases * 100
+average_memory = total_memory_used / no_of_test_cases
 
-print(f"Total time used to solve all {len(test_cases)} test cases: {total_time_used:.4f} seconds")
-average_time = total_time_used / len(test_cases);
-print(f"Average time per case: {average_time:.4f} seconds\n")
+# summary
+print(f"\nTotal Wins: {win_count}")
+print(f"Total Loss: {lose_count}")
+print(f"Total Time Taken: {total_time_used:.4f} seconds")
+print(f"Average Time: {average_time:.4f} seconds")
+print(f"Percentage of Test Cases Solved: {percentage:.2f}%")
+print(f"Total Peak Memory Used: {total_memory_used / 1024:.2f} KB")
+print(f"Average Peak Memory Per Case: {average_memory / 1024:.2f} KB\n")
