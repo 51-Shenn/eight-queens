@@ -1,5 +1,6 @@
 import time
 import tracemalloc
+
 class EightQueens:
     def __init__(self, queens=None):
         # if queens not given, initialize with -1 meaning empty

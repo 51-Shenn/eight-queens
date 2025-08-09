@@ -1,5 +1,6 @@
 import time
 import tracemalloc
+
 class EightQueens:
     def __init__(self, queens=None):
         # if queens not given, initialize with -1 meaning empty
@@ -67,33 +68,33 @@ def backtracking_alg(eq, row=0, fixed_queens=None):
         return True
         
     if fixed_queens is None:
-        # Identify fixed queens (non-negative initial positions)
+        # identify fixed queens (non-negative initial positions)
         fixed_queens = [col if col != -1 else -1 for col in eq.queens]
     
-    # If current row has fixed queen
+    # if current row has fixed queen
     if fixed_queens[row] != -1:
-        # Try keeping fixed position if safe
+        # keep fixed position if safe
         if is_safe(eq.queens, row, fixed_queens[row]):
             if backtracking_alg(eq, row + 1, fixed_queens):
                 return True
-        # If fixed position invalid, try moving it
+        # if fixed position is invalid, move it to safe square
         for col in range(8):
             if col == fixed_queens[row]:
-                continue  # Skip original position
+                continue  # skip original position
             if is_safe(eq.queens, row, col):
                 eq.place_queen(row, col)
                 if backtracking_alg(eq, row + 1, fixed_queens):
                     return True
-                eq.place_queen(row, fixed_queens[row])  # Reset on backtrack
+                eq.place_queen(row, fixed_queens[row])  # reset queen position
         return False
     
-    # For non-fixed queens
+    # for non-fixed queens
     for col in range(8):
         if is_safe(eq.queens, row, col):
             eq.place_queen(row, col)
             if backtracking_alg(eq, row + 1, fixed_queens):
                 return True
-            eq.place_queen(row, -1)  # Backtrack
+            eq.place_queen(row, -1)  # undo queen placement (backtrack)
     return False
 
 def is_safe(queens, row, col):
