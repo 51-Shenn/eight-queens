@@ -87,7 +87,7 @@ def run_test_cases():
 
     # test all cases
     for i, case in enumerate(test_cases, 1):
-        print('-' * 40)
+        print('-' * 60)
         print(f"\nTest Case {i}: {case}")
 
         eq = EightQueens(case)
@@ -121,7 +121,7 @@ def run_test_cases():
         print(f"Time Used: {time_used:.4f} seconds")
         print(f"Peak Memory Usage: {peak / 1024:.2f} KB\n") # show in KB
 
-    print('-' * 40)
+    print('-' * 60)
     lose_count = no_of_test_cases - win_count
     average_move_count = total_move_count / no_of_test_cases
     average_time = total_time_used / no_of_test_cases
