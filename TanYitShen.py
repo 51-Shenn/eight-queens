@@ -4,6 +4,7 @@ class EightQueens:
     def __init__(self, queens=None):
         # if queens not given, initialize with -1 meaning empty
         self.queens = [-1] * 8
+        self.move_count = 0
         if queens:
             for i in range(min(len(queens), 8)):
                 self.queens[i] = queens[i]
@@ -52,6 +53,7 @@ class EightQueens:
         if 0 <= row < 8 and 0 <= col < 8:
             original_col = self.queens[row]
             self.queens[row] = col
+            self.move_count += 1
             if original_col != -1 and original_col != col:
                 print(f"Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
             else:
@@ -120,6 +122,7 @@ def run_test_cases():
 
     solutions = []
 
+    total_move_count = 0
     total_time_used = 0
     total_memory_used = 0
     win_count = 0
@@ -151,6 +154,9 @@ def run_test_cases():
 
         print(f"Solution: {eq.get_solution_list()}")
         solutions.append(eq.get_solution_list())
+        print(f"Move Count: {eq.move_count}")
+        total_move_count += eq.move_count
+
         is_win = eq.win_or_lose(i)
         win_count += int(is_win)
 
@@ -159,6 +165,7 @@ def run_test_cases():
 
     print('-' * 40)
     lose_count = no_of_test_cases - win_count
+    average_move_count = total_move_count / no_of_test_cases
     average_time = total_time_used / no_of_test_cases
     percentage = win_count / no_of_test_cases * 100
     average_memory = total_memory_used / no_of_test_cases
@@ -166,6 +173,8 @@ def run_test_cases():
     # summary
     print(f"\nTotal Wins: {win_count}")
     print(f"Total Loss: {lose_count}")
+    print(f"Total Move Count: {total_move_count}")
+    print(f"Average Move Count: {average_move_count}")
     print(f"Total Time Taken: {total_time_used:.4f} seconds")
     print(f"Average Time: {average_time:.4f} seconds")
     print(f"Percentage of Test Cases Solved: {percentage:.2f}%")
@@ -174,6 +183,7 @@ def run_test_cases():
 
     for s in solutions:
         print(s)
+    print()
 
 if __name__ == "__main__":
     run_test_cases()
