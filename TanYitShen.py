@@ -10,12 +10,10 @@ class EightQueens:
         
     def set_queens(self, queens):
         """Set the queen positions manually with a given list"""
-
         self.queens = queens
 
     def is_valid_queen_placement(self):
         """Check whether the current placement of queens is valid"""
-
         n = len(self.queens)
         for i in range(n):
             for j in range(i + 1, n):
@@ -31,7 +29,6 @@ class EightQueens:
     
     def display_board(self):
         """Display the chessboard with current queen positions"""
-
         print()
         self.board = [['-' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
@@ -43,7 +40,6 @@ class EightQueens:
 
     def win_or_lose(self, test_case_no):
         """Evaluate and print if the current test case is a WIN (valid) or LOSE (invalid)"""
-
         if self.is_valid_queen_placement():
             print(f"Test Case {test_case_no} Result: WIN ✅")
             return True
@@ -57,9 +53,9 @@ class EightQueens:
             original_col = self.queens[row]
             self.queens[row] = col
             if original_col != -1 and original_col != col:
-                print(f"Step: Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
+                print(f"Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
             else:
-                print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
+                print(f"Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
     def get_solution_list(self):
         return self.queens
@@ -176,8 +172,8 @@ def run_test_cases():
     print(f"Total Peak Memory Used: {total_memory_used / 1024:.2f} KB")
     print(f"Average Peak Memory Per Case: {average_memory / 1024:.2f} KB\n")
 
-    for i, j in enumerate(solutions):
-        print(solutions[i])
+    for s in solutions:
+        print(s)
 
 if __name__ == "__main__":
     run_test_cases()

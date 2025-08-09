@@ -48,22 +48,14 @@ class EightQueens:
             return False
     
     def place_queen(self, row, col):
-        """
-        Place or move a queen to a specified column in a given row
-        Use this function in algorithm implementation
-
-        Example: 
-            1. Queen currently at row 0, col 0
-            2. AFTER place_queen(row=0, col=2)
-            3. Queen moved to row 0, col 2
-        """
+        """Place or move a queen to a specified column in a given row"""
         if 0 <= row < 8 and 0 <= col < 8:
             original_col = self.queens[row]
             self.queens[row] = col
             if original_col != -1 and original_col != col:
-                print(f"Step: Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
+                print(f"Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
             else:
-                print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
+                print(f"Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
     def get_solution_list(self):
         return self.queens
@@ -138,8 +130,8 @@ def run_test_cases():
     print(f"Total Peak Memory Used: {total_memory_used / 1024:.2f} KB")
     print(f"Average Peak Memory Per Case: {average_memory / 1024:.2f} KB\n")
 
-    for i, j in enumerate(solutions):
-        print(solutions[i])
+    for s in solutions:
+        print(s)
     print()
 
 if __name__ == "__main__":
