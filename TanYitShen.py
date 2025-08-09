@@ -45,7 +45,7 @@ class EightQueens:
         """Evaluate and print if the current test case is a WIN (valid) or LOSE (invalid)"""
 
         if self.is_valid_queen_placement():
-            print(f"Test Case {test_case_no} Result: WIN  ✅")
+            print(f"Test Case {test_case_no} Result: WIN ✅")
             return True
         else:
             print(f"Test Case {test_case_no} Result: LOSE ❌")
@@ -69,6 +69,52 @@ class EightQueens:
             else:
                 print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
+    def get_solution_list(self):
+        return self.queens
+
+def backtracking_alg(eq, row=0, fixed_queens=None):
+    if row >= 8:
+        return True
+        
+    if fixed_queens is None:
+        # Identify fixed queens (non-negative initial positions)
+        fixed_queens = [col if col != -1 else -1 for col in eq.queens]
+    
+    # If current row has fixed queen
+    if fixed_queens[row] != -1:
+        # Try keeping fixed position if safe
+        if is_safe(eq.queens, row, fixed_queens[row]):
+            if backtracking_alg(eq, row + 1, fixed_queens):
+                return True
+        # If fixed position invalid, try moving it
+        for col in range(8):
+            if col == fixed_queens[row]:
+                continue  # Skip original position
+            if is_safe(eq.queens, row, col):
+                eq.place_queen(row, col)
+                if backtracking_alg(eq, row + 1, fixed_queens):
+                    return True
+                eq.place_queen(row, fixed_queens[row])  # Reset on backtrack
+        return False
+    
+    # For non-fixed queens
+    for col in range(8):
+        if is_safe(eq.queens, row, col):
+            eq.place_queen(row, col)
+            if backtracking_alg(eq, row + 1, fixed_queens):
+                return True
+            eq.place_queen(row, -1)  # Backtrack
+    return False
+
+def is_safe(queens, row, col):
+    for r in range(row):
+        c = queens[r]
+        if c == -1:
+            continue
+        if c == col or abs(r - row) == abs(c - col):
+            return False
+    return True
+
 def run_test_cases():
     # queens[i] = j --> queen at row i, column j.
     test_cases = [
@@ -83,6 +129,8 @@ def run_test_cases():
         [1, 1, 1, 1, 2, 2, 2, 2],
         [0, 1, 0, 1, 0, 1, 0, 1], 
     ]
+
+    solutions = []
 
     total_time_used = 0
     total_memory_used = 0
@@ -102,7 +150,7 @@ def run_test_cases():
         start_time = time.perf_counter()
 
         # implement algorithm here
-        # backtracking
+        backtracking_alg(eq)
         eq.display_board()
 
         # end memory and time tracking
@@ -113,6 +161,8 @@ def run_test_cases():
         total_time_used += time_used
         total_memory_used += peak
 
+        print(f"Solution: {eq.get_solution_list()}")
+        solutions.append(eq.get_solution_list())
         is_win = eq.win_or_lose(i)
         win_count += int(is_win)
 
@@ -134,5 +184,19 @@ def run_test_cases():
     print(f"Total Peak Memory Used: {total_memory_used / 1024:.2f} KB")
     print(f"Average Peak Memory Per Case: {average_memory / 1024:.2f} KB\n")
 
+    for i, j in enumerate(solutions):
+        print(solutions[i])
+
 if __name__ == "__main__":
     run_test_cases()
+
+# [0, 4, 7, 5, 2, 6, 1, 3]
+# [7, 1, 3, 0, 6, 4, 2, 5]
+# [0, 4, 7, 5, 2, 6, 1, 3]
+# [0, 4, 7, 5, 2, 6, 1, 3]
+# [1, 3, 5, 7, 2, 0, 6, 4]
+# [0, 4, 7, 5, 2, 6, 1, 3]
+# [4, 0, 3, 5, 7, 1, 6, 2]
+# [0, 4, 7, 5, 2, 6, 1, 3]
+# [1, 3, 5, 7, 2, 0, 6, 4]
+# [0, 4, 7, 5, 2, 6, 1, 3]

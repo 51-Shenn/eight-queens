@@ -10,12 +10,10 @@ class EightQueens:
         
     def set_queens(self, queens):
         """Set the queen positions manually with a given list"""
-
         self.queens = queens
 
     def is_valid_queen_placement(self):
         """Check whether the current placement of queens is valid"""
-
         n = len(self.queens)
         for i in range(n):
             for j in range(i + 1, n):
@@ -31,7 +29,6 @@ class EightQueens:
     
     def display_board(self):
         """Display the chessboard with current queen positions"""
-
         print()
         self.board = [['-' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
@@ -43,9 +40,8 @@ class EightQueens:
 
     def win_or_lose(self, test_case_no):
         """Evaluate and print if the current test case is a WIN (valid) or LOSE (invalid)"""
-
         if self.is_valid_queen_placement():
-            print(f"Test Case {test_case_no} Result: WIN  ✅")
+            print(f"Test Case {test_case_no} Result: WIN ✅")
             return True
         else:
             print(f"Test Case {test_case_no} Result: LOSE ❌")
@@ -69,6 +65,9 @@ class EightQueens:
             else:
                 print(f"Step: Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
+    def get_solution_list(self):
+        return self.queens
+
 def run_test_cases():
     # queens[i] = j --> queen at row i, column j.
     test_cases = [
@@ -83,6 +82,8 @@ def run_test_cases():
         [1, 1, 1, 1, 2, 2, 2, 2],
         [0, 1, 0, 1, 0, 1, 0, 1], 
     ]
+
+    solutions = []
 
     total_time_used = 0
     total_memory_used = 0
@@ -114,6 +115,8 @@ def run_test_cases():
         total_time_used += time_used
         total_memory_used += peak
 
+        print(f"Solution: {eq.get_solution_list()}")
+        solutions.append(eq.get_solution_list())
         is_win = eq.win_or_lose(i)
         win_count += int(is_win)
 
@@ -134,6 +137,10 @@ def run_test_cases():
     print(f"Percentage of Test Cases Solved: {percentage:.2f}%")
     print(f"Total Peak Memory Used: {total_memory_used / 1024:.2f} KB")
     print(f"Average Peak Memory Per Case: {average_memory / 1024:.2f} KB\n")
+
+    for i, j in enumerate(solutions):
+        print(solutions[i])
+    print()
 
 if __name__ == "__main__":
     run_test_cases()
