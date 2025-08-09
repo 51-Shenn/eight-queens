@@ -52,15 +52,7 @@ class EightQueens:
             return False
     
     def place_queen(self, row, col):
-        """
-        Place or move a queen to a specified column in a given row
-        Use this function in algorithm implementation
-
-        Example: 
-            1. Queen currently at row 0, col 0
-            2. AFTER place_queen(row=0, col=2)
-            3. Queen moved to row 0, col 2
-        """
+        """Place or move a queen to a specified column in a given row"""
         if 0 <= row < 8 and 0 <= col < 8:
             original_col = self.queens[row]
             self.queens[row] = col
