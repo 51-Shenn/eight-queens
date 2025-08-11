@@ -122,6 +122,7 @@ def run_test_cases():
     ]
 
     solutions = []
+    solution_states = []
 
     total_move_count = 0
     total_time_used = 0
@@ -159,6 +160,7 @@ def run_test_cases():
         total_move_count += eq.move_count
 
         is_win = eq.win_or_lose(i)
+        solution_states.append("WIN ✅" if is_win else "LOSE ❌")
         win_count += int(is_win)
 
         print(f"Time Used: {time_used:.4f} seconds")
@@ -172,7 +174,8 @@ def run_test_cases():
     average_memory = total_memory_used / no_of_test_cases
 
     # summary
-    print(f"\nTotal Wins: {win_count}")
+    print(f"\nSUMMARY RESULTS:")
+    print(f"Total Wins: {win_count}")
     print(f"Total Loss: {lose_count}")
     print(f"Total Move Count: {total_move_count}")
     print(f"Average Move Count: {average_move_count}")
@@ -182,20 +185,10 @@ def run_test_cases():
     print(f"Total Peak Memory Used: {total_memory_used / 1024:.2f} KB")
     print(f"Average Peak Memory Per Case: {average_memory / 1024:.2f} KB\n")
 
-    for s in solutions:
-        print(s)
+    print("FINAL SOLUTIONS:")
+    for i, s in enumerate(solutions, 1):
+        print(f"Test Case {i:02d}: {s} -> {solution_states[i-1]}")
     print()
 
 if __name__ == "__main__":
     run_test_cases()
-
-# [0, 4, 7, 5, 2, 6, 1, 3]
-# [7, 1, 3, 0, 6, 4, 2, 5]
-# [0, 4, 7, 5, 2, 6, 1, 3]
-# [0, 4, 7, 5, 2, 6, 1, 3]
-# [1, 3, 5, 7, 2, 0, 6, 4]
-# [0, 4, 7, 5, 2, 6, 1, 3]
-# [4, 0, 3, 5, 7, 1, 6, 2]
-# [0, 4, 7, 5, 2, 6, 1, 3]
-# [1, 3, 5, 7, 2, 0, 6, 4]
-# [0, 4, 7, 5, 2, 6, 1, 3]

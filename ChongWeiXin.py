@@ -283,7 +283,7 @@ def run_test_cases():
     for i, s in enumerate(solutions, 1):
         fitness_score = fitness(s)
         status = "✅ PERFECT" if fitness_score == 28 else f"❌ Fitness: {fitness_score}"
-        print(f"Test Case {i}: {s} - {status}")
+        print(f"Test Case {i:02d}: {s} - {status}")
     print()
 
 if __name__ == "__main__":
