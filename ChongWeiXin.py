@@ -156,6 +156,30 @@ class EightQueens:
             else:
                 print(f"Place queen at row {row}, column {col} (queens[{row}] = {col})")
 
+    def move_queens_to_solution(self, target_solution, show_moves=True):
+        """Move queens step by step from current position to target solution"""
+        if show_moves:
+            print(f"\n--- Moving queens to solution: {target_solution} ---")
+            
+        moves_made = 0
+        for row in range(8):
+            if self.queens[row] != target_solution[row]:
+                if show_moves:
+                    self.place_queen(row, target_solution[row])
+                else:
+                    original_col = self.queens[row]
+                    self.queens[row] = target_solution[row]
+                    self.move_count += 1
+                moves_made += 1
+                
+        if show_moves:
+            if moves_made == 0:
+                print("No moves needed - already at target solution!")
+            else:
+                print(f"--- Completed {moves_made} moves ---\n")
+                
+        return moves_made
+
     def get_solution_list(self):
         return self.queens
 
@@ -188,6 +212,7 @@ def run_test_cases():
         print(f"\nTest Case {i}: {case}")
 
         eq = EightQueens(case)
+        print("\nInitial Board:")
         eq.display_board()
 
         # start tracking memory and time
@@ -236,8 +261,10 @@ def run_test_cases():
         else:
             print(f"Best solution found (fitness {best_fitness}) in generation {generation_found}: {best_solution}")
 
-        # Set the best solution found
-        eq.set_queens(best_solution)
+        # Move queens step by step to the solution
+        moves_made = eq.move_queens_to_solution(best_solution, show_moves=True)
+        
+        print("\nFinal Board:")
         eq.display_board()
 
         # end memory and time tracking

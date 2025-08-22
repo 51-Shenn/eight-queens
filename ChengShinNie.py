@@ -76,7 +76,7 @@ def conflict_count(queens):
     return conflicts
 
 def simulated_annealing(eq):
-    temp = 500.0       # start temperature
+    temp = 1000.0       # start temperature
     cooling = 0.99     # slow cooling for better exploration
     min_temp = 0.001
     max_steps = 10000
