@@ -1,5 +1,6 @@
 import time
 import tracemalloc
+import heapq
 
 class EightQueens:
     def __init__(self, queens=None):
@@ -56,17 +57,138 @@ class EightQueens:
             self.queens[row] = col
             self.move_count += 1
             if original_col != -1 and original_col != col:
-                print(f"Move queen from row {row}, column {original_col} to column {col} (queens[{row}] = {col})")
+                print(f"Move queen from row {row+1}, column {original_col+1} to column {col+1} (queens[{row}] = {col})")
             else:
-                print(f"Place queen at row {row}, column {col} (queens[{row}] = {col})")
+                print(f"Place queen at row {row+1}, column {col+1} (queens[{row+1}] = {col+1})")
 
     def get_solution_list(self):
         return self.queens
 
+# A* node class
+class AStarNode:
+    def __init__(self, queens, g_cost, move_sequence=None):
+        self.queens = queens[:] # copy queens position list
+        self.g_cost = g_cost  # number of moves needed to reach this state
+        self.h_cost = self.calculate_heuristic()  # heuristic cost : number of conflicts
+        self.f_cost = self.g_cost + self.h_cost  # total cost : f cost = g cost + h cost
+        self.move_sequence = move_sequence or [] # sequence of moves from initial state to this state
+    
+    def calculate_heuristic(self):
+        """Count conflicts between all queens"""
+        conflicts = 0
+        n = len(self.queens) # can remove if all 8 queens are always on board
+        
+        for i in range(n): # n = 8
+             # can be removed
+            if self.queens[i] == -1:
+                conflicts += 3 # penalty for unplaced queen 
+                continue
+                
+            # check conflicts with other queens
+            for j in range(i + 1, n):
+                # can be removed
+                if self.queens[j] == -1: 
+                    continue
+                    
+                if self.queens[i] == self.queens[j]: # same column
+                    conflicts += 2
+                
+                if abs(self.queens[i] - self.queens[j]) == abs(i - j): # same diagonal : |row1 - row2| == |col1 - col2|
+                    conflicts += 2
+        
+        return conflicts
+    
+    def is_goal(self):
+        """Check if this is a goal state (valid queen placement)"""
+        return self.h_cost == 0 # herustic cost = 0 means no conflicts (is goal state)
+    
+    def get_neighbors(self):
+        """Generate all the next possible moves for queens (neighbors)"""
+        neighbors = [] # list of neighbor nodes
+        
+        # iterate each row to find placed and unplaced queens 
+        for row in range(8):
+            # can be removed
+            if self.queens[row] == -1:
+                # Place unplaced queen
+                for col in range(8):
+                    new_queens = self.queens[:]
+                    new_queens[row] = col
+                    new_move_sequence = self.move_sequence + [(row, self.queens[row], col)]
+                    neighbors.append(AStarNode(new_queens, self.g_cost + 1, new_move_sequence))
+            else:
+                initial_col = self.queens[row] # initial column
+                # move queens to other columns in same row
+                for col in range(8):
+                    if col != initial_col: # avoid moving to same column
+                        new_queens = self.queens[:] # copy current queens state
+                        new_queens[row] = col # move queen to new column
+                        new_move_sequence = self.move_sequence + [(row, initial_col, col)] # record move
+                        neighbors.append(AStarNode(new_queens, self.g_cost + 1, new_move_sequence)) # create new node
+        
+        return neighbors
+    
+    # priority queue comparison methods : compare costs
+    def __lt__(self, other):
+        """Less than comparison for priority queue based on f_cost and h_cost"""
+        if self.f_cost != other.f_cost:
+            return self.f_cost < other.f_cost
+        return self.h_cost < other.h_cost
+    
+    def __eq__(self, other):
+        """Equality check based on queens configuration"""
+        return self.queens == other.queens
+    
+    def __hash__(self):
+        """Hash function for using in sets and dictionaries"""
+        return hash(tuple(self.queens)) # easy way create unique hash for queens position
+
 # A* Search Algorithm for 8 Queens Problem
 def astar_search(eq):
-    eq.queens = None
+    """A* search implementation for 8 Queens problem"""
+    initial_state = AStarNode(eq.queens, 0) # initial state with g_cost = 0
     
+    if initial_state.is_goal(): # skip if solved
+        return
+    
+    open_set = [initial_state] # priority queue
+    closed_set = set() # explored states
+    visited_states = {tuple(initial_state.queens): 0} # dictionary to track visited states and their costs
+    
+    max_iterations = 10000  # prevent infinite loops
+    iteration = 0
+    
+    while open_set and iteration < max_iterations:
+        iteration += 1
+        current = heapq.heappop(open_set)
+        
+        # if goal is found, update the board with solution(move sequence)
+        if current.is_goal():
+            for row, old_col, new_col in current.move_sequence: # old_col is placeholder
+                eq.place_queen(row, new_col)
+            return
+        
+        current_tuple = tuple(current.queens) # convert to tuple for explored state set
+        if current_tuple in closed_set:
+            continue
+        
+        closed_set.add(current_tuple)
+        
+        # generate neighbors
+        for neighbor in current.get_neighbors():
+            neighbor_tuple = tuple(neighbor.queens) # convert to tuple for easy compare
+            
+            # skip if neighbor already visited with a better or equal cost
+            if neighbor_tuple in visited_states and visited_states[neighbor_tuple] <= neighbor.g_cost:
+                continue
+            
+            # skip if already explored in closed(explored) set
+            if neighbor_tuple in closed_set:
+                continue
+            
+            visited_states[neighbor_tuple] = neighbor.g_cost
+            heapq.heappush(open_set, neighbor)
+
 def run_test_cases():
     # queens[i] = j --> queen at row i, column j.
     test_cases = [
@@ -104,8 +226,7 @@ def run_test_cases():
         start_time = time.perf_counter()
 
         # implement algorithm here
-        eq.place_queen(row=1, col=2) # example how it works (PLS REMOVE THIS)
-        eq.place_queen(row=3, col=7) # example how it works (PLS REMOVE THIS)
+        astar_search(eq)
         eq.display_board()
 
         # end memory and time tracking
