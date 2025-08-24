@@ -177,7 +177,6 @@ def steepest_ascent_hill_climbing(eq):
                     neighbor_state = current_state[:]
                     neighbor_state[row] =  col
                     neighbors.append(neighbor_state)
-                    print (neighbor_state)
 
         # Evaluate each neighbor state's heuristic, find the best neighbor state, move to that state, repeat the whole thing
         for neighbor in neighbors:
