@@ -32,7 +32,7 @@ class EightQueens:
     def display_board(self, isInitial):
         """Display the chessboard with current queen positions"""
         print("\nInitial Board:" if isInitial else "\nFinal Board:")
-        self.board = [['~' for _ in range(8)] for _ in range(8)]
+        self.board = [['.' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
             if 0 <= col < 8:
                 self.board[row][col] = 'Q'
