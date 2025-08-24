@@ -31,10 +31,10 @@ class EightQueens:
 
         return True # if passed all constraints return true
 
-    def display_board(self):
+    def display_board(self, isInitial):
         """Display the chessboard with current queen positions"""
-        print()
-        self.board = [['-' for _ in range(8)] for _ in range(8)]
+        print("\nInitial Board:" if isInitial else "\nFinal Board:")
+        self.board = [['.' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
             if 0 <= col < 8:
                 self.board[row][col] = 'Q'
@@ -139,14 +139,15 @@ def run_test_cases():
         print('-' * 60)
         print(f"\nTest Case {i}: {case}")
         eq = EightQueens(case)
-        eq.display_board()
+        eq.display_board(isInitial=True)
+        print("--- Moving Queens to Valid Configuration ---")
 
         # start tracking memory and time
         tracemalloc.start()
         start_time = time.perf_counter()
 
         simulated_annealing(eq)
-        eq.display_board()
+        eq.display_board(isInitial=False)
 
         # end memory and time tracking
         time_used = time.perf_counter() - start_time

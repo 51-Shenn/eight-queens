@@ -125,10 +125,10 @@ class EightQueens:
 
         return True # if passed all constraints return true
     
-    def display_board(self):
+    def display_board(self, isInitial):
         """Display the chessboard with current queen positions"""
-        print()
-        self.board = [['-' for _ in range(8)] for _ in range(8)]
+        print("\nInitial Board:" if isInitial else "\nFinal Board:")
+        self.board = [['.' for _ in range(8)] for _ in range(8)]
         for row, col in enumerate(self.queens):
             if 0 <= col < 8:
                 self.board[row][col] = 'Q'
@@ -176,7 +176,7 @@ class EightQueens:
             if moves_made == 0:
                 print("No moves needed - already at target solution!")
             else:
-                print(f"--- Completed {moves_made} moves ---\n")
+                print(f"--- Completed {moves_made} moves ---")
                 
         return moves_made
 
@@ -212,8 +212,7 @@ def run_test_cases():
         print(f"\nTest Case {i}: {case}")
 
         eq = EightQueens(case)
-        print("\nInitial Board:")
-        eq.display_board()
+        eq.display_board(isInitial=True)
 
         # start tracking memory and time
         tracemalloc.start()
@@ -264,8 +263,7 @@ def run_test_cases():
         # Move queens step by step to the solution
         moves_made = eq.move_queens_to_solution(best_solution, show_moves=True)
         
-        print("\nFinal Board:")
-        eq.display_board()
+        eq.display_board(isInitial=False)
 
         # end memory and time tracking
         time_used = time.perf_counter() - start_time
