@@ -194,6 +194,10 @@ def steepest_ascent_hill_climbing(eq):
             return current_state
 
         if best_h < current_h:
+            diff_indices = [i for i in range(len(current_state)) if current_state[i] != best_state[i]]
+            if diff_indices:
+                row = diff_indices[0]
+                print(f"Queen in row [{row}] moved from column [{current_state[row]}] to column [{best_state[row]}]")
             current_state = best_state
             eq.move_count += 1
             current_h = best_h
