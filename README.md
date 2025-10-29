@@ -1,7 +1,7 @@
 # Eight-Queens Search Problem
 
 ## Implemented Algorithms
-Each algorithm is implemented in a separate Python file, based on the main.py as the base template:
+Each algorithm is implemented in a separate Python file, based on the [main.py](main.py) as the base template:
 - [**Backtracking Algorithm:** TanYitShen.py](TanYitShen.py)
 - [**Depth-First Search (DFS):** AdrianChewTiongHong.py](AdrianChewTiongHong.py)
 - [**A\* Search Algorithm:** BrianKamDingXian.py](BrianKamDingXian.py)
