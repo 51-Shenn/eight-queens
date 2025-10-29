@@ -11,7 +11,7 @@ Each algorithm is implemented in a separate Python file, based on the [main.py](
 
 ## Final Report
 The complete project documentation can be found here:  
-[📄 EightQueens_FinalReport.pdf](EightQueens_FinalReport.pdf)
+📄 [EightQueens_FinalReport.pdf](EightQueens_FinalReport.pdf)
 
 ## Overview
 This project explores the many ways that different search algorithms can solve the 8-Queens problem in artificial intelligence. The main purpose is to find out how different algorithms perform in terms of 4 criterias, which is completeness, cost-optimality, time complexity, and space complexity. Theoretical analysis will be carried out to predict outcomes, using multiple test cases to achieve results that will match with our hypothesis. Lastly, a conclusion will be made to compile the results that we got.
