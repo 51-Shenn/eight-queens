@@ -1,12 +1,12 @@
 # Eight-Queens Search Problem
 
 ## Algorithms
-- **Backtracking Algorithm** [Backtracking](TanYitShen.py)
-- **Depth-First Search Algorithm** [DFS] (AdrianChewTiongHong.py)
-- **A\* Search Algorithm** [A-star](BrianKamDingXian.py)
-- **Steepest Ascent Hill Climbing** [SAHC](YouJingHong.py)
-- **Simulated Annealing** [SA](ChengShinNie.py)
-- **Genetic Algorithm** [GA](ChongWeiXin.py)
+- [**Backtracking Algorithm**](TanYitShen.py)
+- [**Depth-First Search Algorithm**](AdrianChewTiongHong.py)
+- [**A\* Search Algorithm**](BrianKamDingXian.py)
+- [**Steepest Ascent Hill Climbing**](YouJingHong.py)
+- [**Simulated Annealing**](ChengShinNie.py)
+- [**Genetic Algorithm**](ChongWeiXin.py)
 
 ## Introduction
 This project explores the many ways that different search algorithms can solve the 8-Queens problem in artificial intelligence. The main purpose is to find out how different algorithms perform in terms of 4 criterias, which is completeness, cost-optimality, time complexity, and space complexity. Theoretical analysis will be carried out to predict outcomes, using multiple test cases to achieve results that will match with our hypothesis. Lastly, a conclusion will be made to compile the results that we got.
