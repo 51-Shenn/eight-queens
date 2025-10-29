@@ -3,7 +3,7 @@
 ## Implemented Algorithms
 Each algorithm is implemented in a separate Python file, based on the main.py as the base template:
 - [**Backtracking Algorithm:** TanYitShen.py](TanYitShen.py)
-- [**Depth-First Search Algorithm:** AdrianChewTiongHong.py](AdrianChewTiongHong.py)
+- [**Depth-First Search (DFS):** AdrianChewTiongHong.py](AdrianChewTiongHong.py)
 - [**A\* Search Algorithm:** BrianKamDingXian.py](BrianKamDingXian.py)
 - [**Steepest Ascent Hill Climbing:** YouJingHong.py](YouJingHong.py)
 - [**Simulated Annealing:** ChengShinNie.py](ChengShinNie.py)
